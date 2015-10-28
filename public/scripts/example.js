@@ -75,7 +75,7 @@ var Composer = React.createClass({
 
   handleSubmit: function() {
     // When Composer is alerted by WidgetInstances to preview data, Composer alerts the View 
-    // parent component to submit data to the Preview component.
+    // owner component to submit data to the Preview component.
     this.props.submit([this.state.title, this.state.instances]);
   },
 
@@ -99,14 +99,14 @@ var WidgetList = React.createClass({
   // WidgetList is a list of all the Widgets that can be added (Radio and Checkbox).
   addRadio: function() {
     // When the Radio button is clicked, add a new Radio component to the list of instances.
-    // The key and type of widget is passed to and is handled by the parent Composer component.
+    // The key and type of widget is passed to and is handled by the owner Composer component.
     var timestamp = Date.now();
     this.props.addWidget({type: "radio", key: timestamp});
   },
 
   addCheckbox: function() {
     // When the Checkbox button is clicked, add a new Checkbox component to the list of instances.
-    // The key and type of widget is passed to and is handled by the parent Composer component.
+    // The key and type of widget is passed to and is handled by the owner Composer component.
     var timestamp = Date.now();
     this.props.addWidget({type: "checkbox", key: timestamp});
   },
@@ -129,25 +129,25 @@ var WidgetInstances = React.createClass({
   // middle man for handling data from the individual instances of the Widget to the Composer,
   // where the Widgets' data can be handled.
   handleDeleteWidget: function(data) {
-    // Data is passed up from the Widget child component, and is then passed up to the parent 
+    // Data is passed up from the Widget component, and is then passed up to the owner 
     // Composer component where it will handle deletion of the Widget.
     this.props.handleDeleteWidget(data);
   },
 
   handleUpdateData: function(data){
-    // Data is passed from the Widget child component, and is then passed up to the parent 
+    // Data is passed from the Widget component, and is then passed up to the owner 
     // Composer component where it will handle updating the Widget's data.    
     this.props.handleUpdateData(data);  
   },
 
   handleUpdateTitle: function(title){
-    // When the title is changed, WidgetInstances will pass up data to the parent Composer 
+    // When the title is changed, WidgetInstances will pass up data to the owner Composer 
     // component where it will handle updating the survey's title. 
     this.props.handleUpdateTitle(this.refs.title.value.trim());  
   },
 
   onSubmit: function(){
-    // When the submit button is pressed, alert the parent Composer component to send data to 
+    // When the submit button is pressed, alert the owner Composer component to send data to 
     // the Preview component.
     this.props.onSubmit();  
   },
@@ -182,8 +182,8 @@ var WidgetInstances = React.createClass({
 var Widget = React.createClass({ 
   // Widget is an individual Widget containing fields for questions and choices.
   deleteWidget: function() {
-    // When the delete button is clicked, send the Widget's data to the parent WidgetInstances.
-    // WidgetInstances has an identical function that sends the data to their parent, Composer,  
+    // When the delete button is clicked, send the Widget's data to the owner WidgetInstances.
+    // WidgetInstances has an identical function that sends the data to their owner, Composer,  
     // where it can delete the widget.
     this.props.deleteWidget({
       type: this.props.data.type, 
@@ -195,8 +195,8 @@ var Widget = React.createClass({
 
   updateData: function() {
     // When the data within the Widget instances is changed, send the Widget's data to the 
-    // parent WidgetInstances. WidgetInstances has an identical function that sends the 
-    // data to their parent, Composer, where it can update the data.
+    // owner WidgetInstances. WidgetInstances has an identical function that sends the 
+    // data to their owner, Composer, where it can update the data.
     this.props.updateData({
       type: this.props.data.type, 
       key: this.props.data.key, 
