@@ -81,12 +81,11 @@ var Composer = React.createClass({
 
   render: function() {
     return (
-      <div style={{display:'inline-block'}}>
-        <div style={{display:'inline-block', verticalAlign:'top', 
-          width: '200', textAlign: 'center'}}>
+      <div className="inline-div">
+        <div className="widget-list">
           <WidgetList addWidget={this.handleAddWidget} />
         </div>
-        <div style={{display:'inline-block', width: '450', textAlign: 'center'}}>
+        <div className="widget-instances">
           <WidgetInstances data={this.state.instances} handleDeleteWidget={this.handleDeleteWidget} 
             handleUpdateData={this.handleUpdateData} handleUpdateTitle={this.handleUpdateTitle} 
             onSubmit={this.handleSubmit} />
@@ -114,7 +113,7 @@ var WidgetList = React.createClass({
 
   render: function() {
     return (
-      <div style={{display:'inline-block'}}>
+      <div className="inline-div">
         <h3>Widget List</h3>
         <button type="button" onClick={this.addRadio}>Radio</button>
         <br />
@@ -164,11 +163,11 @@ var WidgetInstances = React.createClass({
     });
     return (
       <div>
-        <div style={{display:'inline-block'}}>
-          <div style={{display:'inline-block', padding: "0px 10px"}}>
+        <div className="inline-div">
+          <div className="survey-title">
             <h4>Survey Title:</h4>   
           </div>
-          <div style={{display:'inline-block'}}>
+          <div className="inline-div">
             <input type="text" ref="title" placeholder="Type title here." 
               onChange={this.handleUpdateTitle}/> 
           </div>
@@ -214,12 +213,12 @@ var Widget = React.createClass({
         title = "Checkbox";
       }          
     return (
-      <div className="widget" style={{margin: "10px", backgroundColor: "#ebebeb"}}>
-        <div style={{display:"inline-block"}}>
-          <h4 style={{textAlign:'left', margin: "10px", float:'left'}}>{title}</h4>
-          <div style={{margin: "10px", float:'right'}}>
+      <div className="widget">
+        <div className="inline-div">
+          <h4 className="title-type">{title}</h4>
+          <div className="delete-section">
             <button type="button" onClick={this.deleteWidget} 
-              style={{border: "none", outline: "none"}} >X</button>
+              className="delete-button">X</button>
           </div>
         </div>
         <br />
@@ -242,32 +241,37 @@ var Preview = React.createClass({
     var title, instances, instanceNodes, cleanChoices;
     var returnData = [];
     if (data[1]){ 
-      //Tf there is data sent to Preview component, parse and render the data. 
-      title = data[0].toUpperCase();
+      //If there is data sent to Preview component, parse and render the data.
+      if (data[0]){
+        title = data[0].toUpperCase();
+      } 
       instances = data[1];
       instanceNodes = instances.map(function (widget) {
         var choices = widget.choices;
         cleanChoices = [];
-        cleanChoices.push(<h4>{widget.question.toUpperCase()}</h4>);
-        choices = choices.split(",");
-        choices.forEach(function (chc) {
-          chc = chc.trim();
-          if (widget.type == "radio"){
-            // I didn't have enough time to implement functional checkboxes and radios. If I did,
-            // I would wrap the choices in <form></form> and change <p> in line 258 & 260 to <input>.
-            cleanChoices.push(<p>○ {chc}</p>);
-          }else {
-            cleanChoices.push(<p>□ {chc}</p>);
-          }
-        }); 
+        if (widget.question){
+          cleanChoices.push(<h4>{widget.question.toUpperCase()}</h4>);
+        }
+        if (widget.choices){
+          choices = choices.split(",");
+          choices.forEach(function (chc) {
+            chc = chc.trim();
+            if (widget.type == "radio"){
+              // I didn't have enough time to implement functional checkboxes and radios. If I did,
+              // I would wrap the choices in <form></form> and change <p> in line 258 & 260 to <input>.
+              cleanChoices.push(<p>○ {chc}</p>);
+            }else {
+              cleanChoices.push(<p>□ {chc}</p>);
+            }
+          }); 
+        }        
         returnData.push(cleanChoices);
       });         
     } 
     return (
-      <div className="preview" style={{display:'inline-block', verticalAlign:'top', 
-        textAlign: 'left', width: '300', margin: "0px 50px"}} >
+      <div className="preview">
         <h3>Preview</h3>
-        <h4 style={{textDecoration: "underline"}}>{title}</h4>
+        <h4 className="title">{title}</h4>
         {returnData}
       </div>
     );

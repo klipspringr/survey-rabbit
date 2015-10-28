@@ -60,3 +60,58 @@ p, ul {
 ul {
   padding-left: 30px;
 }
+
+.preview {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  width: 300px;
+  margin: 0px 50px;
+}
+
+.title {
+  text-decoration: underline;
+}
+
+.widget {
+  margin: 10px;
+  background-color: #ebebeb;
+}
+
+.title-type {
+  text-align:left;
+  margin: 10px;
+  float: left;
+}
+
+.delete-section {
+  margin: 10px;
+  float:right;
+}
+
+.delete-button {
+  border: none;
+  outline: none;
+}
+
+.inline-div {
+  display: inline-block;
+}
+
+.widget-list {
+  display: inline-block; 
+  vertical-align: top;
+  width: 200px; 
+  text-align: center;
+}
+
+.widget-instances {
+  display: inline-block; 
+  width: 450px;
+  text-align: center;
+}
+
+.survey-title {
+  display:inline-block; 
+  padding: 0px 10px;
+}
